@@ -46,6 +46,26 @@ Whitespace, uppercase units, decimals, repeated or reordered units, and explicit
 zero durations remain open product decisions for human review. They are outside
 the currently supported format and raise `ValueError` pending clarification.
 
+## Word frequencies
+
+`word_count(text)` returns a dictionary of lowercase words and their counts:
+
+```python
+from word_count import word_count
+
+word_count("The the THE")  # {"the": 3}
+word_count("Hello, hello!")  # {"hello": 2}
+word_count("don't")  # {"don't": 1}
+word_count("hello,world")  # {"hello": 1, "world": 1}
+word_count("")  # {}
+```
+
+Punctuation and whitespace separate words. Straight apostrophes are preserved
+only inside words, so quoted text such as `"'don't'"` counts as `"don't"`.
+The current tokenizer recognizes ASCII-letter words. Unicode letters, digits,
+and curly apostrophes remain open product decisions for human review and are
+outside the supported word format.
+
 Run all tests from the repository root:
 
 ```sh
