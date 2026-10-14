@@ -23,6 +23,29 @@ after lowercasing. Other character runs become one hyphen, and boundary hyphens
 are removed. No transliteration is performed. Whether to preserve Unicode letters
 and digits remains an open product decision for human review.
 
+## Duration parsing
+
+`parse_duration(text)` converts compact durations into integer seconds:
+
+```python
+from parse_duration import parse_duration
+
+parse_duration("90s")       # 90
+parse_duration("2m")        # 120
+parse_duration("1h30m")     # 5400
+parse_duration("1h30m15s")  # 5415
+```
+
+The supported format uses whole-number components with lowercase `h`, `m`, `s`
+units, each at most once and in that order, with a positive total. Each component
+is optional, but at least one must be present. The entire input must match;
+invalid strings such as `""`, `"abc"`, `"5x"`, `"-5m"`, or `"1h30m!"` raise
+`ValueError` with a format explanation. Non-string inputs raise `TypeError`.
+
+Whitespace, uppercase units, decimals, repeated or reordered units, and explicit
+zero durations remain open product decisions for human review. They are outside
+the currently supported format and raise `ValueError` pending clarification.
+
 Run all tests from the repository root:
 
 ```sh
